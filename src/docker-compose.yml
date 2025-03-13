@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  elasticsearch:
+    image: elasticsearch:8.13.0
+    environment:
+      # elastisearch is being ran in a single-node,
+      # as it usually expects to be in a cluster.
+      # for this application, a cluster is unnecessary.
+      - discovery.type=single-node
+      # authentication and security are disabled
+      # for the sake of brevity and simplicity.
+      - "xpack.security.enabled=false"
+
+    volumes:
+      # mount a volume containing the init script, as well as the initial data.
+      - ./data/:/usr/share/elasticsearch/init_data
+    ports:
+      # arbitrary port selection
+      - "9200:9200"
+    healthcheck:
+      # this test will curl elastisearch's healthcheck end point, or exit 1 on a failure.
+      test: ["CMD-SHELL", "curl --silent --fail http://localhost:9200/_cluster/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
