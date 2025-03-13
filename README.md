@@ -25,6 +25,7 @@ python init.py
 this should initialize the indexes for the elasticsearch instance, and upload the initial data in batches.
 
 
+# Endpoints
 
 the end points are provided using fastAPI, and the docs can be accessed by navigating to
 [localhost:8000/docs](http://localhost:8000/docs).
