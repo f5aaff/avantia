@@ -1,3 +1,4 @@
+
 # Setting up containers
 
 enter the src directory and run the following:
@@ -7,6 +8,22 @@ docker-compose up --build
 ```
 
 this will build the containers, and start them.
+
+# initializing the elasticSearch instance.
+
+run:
+```bash
+python -m pip install -r requirements.txt
+
+```
+
+then:
+```bash
+python init.py
+```
+
+this should initialize the indexes for the elasticsearch instance, and upload the initial data in batches.
+
 
 
 the end points are provided using fastAPI, and the docs can be accessed by navigating to
